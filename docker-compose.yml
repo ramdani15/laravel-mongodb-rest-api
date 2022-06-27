@@ -1,0 +1,47 @@
+#docker-compose.yml
+version: '3'
+services:
+    nginx:
+        container_name: nginx
+        image: nginx:1.17.8
+        command: [ "nginx", "-g", "daemon off;" ]
+        working_dir: /var/www/html
+        depends_on:
+            - php
+        volumes:
+            - ./docker/nginx/asset/:/etc/nginx/conf.d/
+            - ./docker/nginx/log:/var/log/nginx/:rw
+            - ./:/var/www/html:rw
+        ports:
+            - "8080:80"
+        links:
+            - php
+        logging:
+            options:
+                max-size: "1m"
+                max-file: "3"
+    php:
+        container_name: php
+        build: ./docker/php
+        links:
+            - db
+        depends_on:
+            - db
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html:rw
+        command: bash -c "php-fpm"
+        logging:
+            options:
+                max-size: "1m"
+                max-file: "3"
+    db:
+        container_name: mongodb
+        image: mongo:4.2
+        ports:
+            - 27018:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password123
+        logging:
+            driver: none
