@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->morphs('orderable');
             $table->tinyInteger('quantity');
             $table->decimal('total_price', 11, 2);
+            $table->foreignIdFor('App\Models\User');
             $table->integer('created_at')->nullable();
             $table->integer('updated_at')->nullable();
             $table->integer('deleted_at')->nullable();

@@ -16,6 +16,7 @@ class Order extends Model
         'orderable_id',
         'quantity',
         'total_price',
+        'user_id',
     ];
     protected $dateFormat = 'U';
     protected $dates = [
@@ -30,5 +31,13 @@ class Order extends Model
     public function orderable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Get the User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
