@@ -14,6 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::name('api.v1.')
+->namespace('Api\\V1')
+->prefix('v1')
+->group(function () {
+
+    // Auth
+    Route::group(['prefix' => 'auth', 'name' => 'auth'], function () {
+        Route::post('login', 'AuthController@login')->name('login');
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('logout', 'AuthController@logout')->name('logout');
+        });
+    });
+
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        // User
+        Route::group(['prefix' => 'users', 'name' => 'users'], function () {
+            Route::get('profile', 'UserController@profile')->name('profile');
+        });
+
+        // Vehicles
+        Route::resource('vehicles', 'VehicleController')->only('index', 'show');
+
+        // Orders
+        Route::resource('orders', 'OrderController')->only('index', 'show');
+    });
 });

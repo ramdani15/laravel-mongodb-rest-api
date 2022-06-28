@@ -10,4 +10,22 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @OA\Info(
+     *      version="1.0.0",
+     *      title="Laravel Mongo API documentation",
+     * )
+     * 
+     * @OA\SecurityScheme(
+     *      securityScheme="token",
+     *      type="http",
+     *      scheme="bearer",
+     *      bearerFormat="JWT"
+     * )
+     */
+    public function initHeaderSwagger()
+    {
+        //
+    }
 }

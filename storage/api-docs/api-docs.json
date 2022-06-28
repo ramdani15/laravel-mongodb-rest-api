@@ -1,0 +1,336 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Mongo API documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign in",
+                "description": "Login by email, password",
+                "operationId": "a7997e7c1e3bfed64d4e56de82415931",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": "super@laramongo.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log user out ",
+                "description": "Endpoint to log current user out",
+                "operationId": "f6b8957b4c0b25636613a9f0512a8ba9",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get list orders",
+                "description": "Endpoint to get list orders",
+                "operationId": "00d3856d2d3d93124e0cc021d0cb5b79",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit (Default 10)"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Num Of Page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to get list orders."
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something Wrong."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/orders/{id}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get detail order",
+                "description": "Endpoint to get detail order",
+                "operationId": "b2f9845bf9fe11158e0e43f1dd0c5802",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/profile": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get current's user profile",
+                "description": "Endpoint to get logged in user",
+                "operationId": "ff3612f9aedcefed24330811759fff3b",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/vehicles": {
+            "get": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Get list vehicles",
+                "description": "Endpoint to get list vehicles",
+                "operationId": "73b535724aa9e0eb6ab36f9dea2af5d9",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name"
+                    },
+                    {
+                        "name": "color",
+                        "in": "query",
+                        "description": "Color"
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Price"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit (Default 10)"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Num Of Page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to get list vehicles."
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something Wrong."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/vehicles/{id}": {
+            "get": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Get detail vehicle",
+                "description": "Endpoint to get detail vehicle",
+                "operationId": "3f9cfe137c4a5c2f8d0cebf4df782777",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vehicle ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "token": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

@@ -20,10 +20,10 @@ class VehicleFactory extends Factory
             'name' => $this->faker->name(),
             'year' => $this->faker->year(),
             'color' => $this->faker->colorName(),
-            'price' => $this->faker->randomDigit(),
+            'price' => $this->faker->randomDigit() * 1000,
             'stock' => $this->faker->randomDigit(),
-            'attachable_id' => $attachable::factory(),
-            'attachable_type' => $attachable,
+            'attachable_id' => $attachable['class']::factory(),
+            'attachable_type' => $attachable['classname'],
         ];
     }
 
@@ -33,8 +33,14 @@ class VehicleFactory extends Factory
     public function attachable()
     {
         return $this->faker->randomElement([
-            Car::class,
-            Motorcycle::class,
+            [
+                'classname' => 'Car',
+                'class' => Car::class
+            ],
+            [
+                'classname' => 'Motorcycle',
+                'class' => Motorcycle::class
+            ],
         ]);
     }
 }

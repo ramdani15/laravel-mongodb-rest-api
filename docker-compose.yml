@@ -38,6 +38,8 @@ services:
     db:
         container_name: mongodb
         image: mongo:4.2
+        volumes:
+            - './dbdata:/data/db'
         ports:
             - 27018:27017
         environment:

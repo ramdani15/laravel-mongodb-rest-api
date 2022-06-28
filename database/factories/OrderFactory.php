@@ -19,8 +19,8 @@ class OrderFactory extends Factory
         return [
             'quantity' => $this->faker->randomDigit(),
             'total_price' => $this->faker->randomDigit() * 1000,
-            'orderable_id' => $orderable::factory(),
-            'orderable_type' => $orderable,
+            'orderable_id' => $orderable['class']::factory(),
+            'orderable_type' => $orderable['classname'],
             'user_id' => User::factory()
         ];
     }
@@ -31,7 +31,10 @@ class OrderFactory extends Factory
     public function orderable()
     {
         return $this->faker->randomElement([
-            Vehicle::class,
+            [
+                'classname' => 'Vehicle',
+                'class' => Vehicle::class
+            ],
         ]);
     }
 }
