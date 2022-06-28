@@ -67,24 +67,28 @@ class AuthController extends Controller
     *           {"token": {}}
     *       },
     *       @OA\Response(
-    *           response="200",
+    *           response=200,
     *           description="OK"
-    *       )
+    *       ),
+    *       @OA\Response(
+    *           response=401,
+    *           description="Unauthorized"
+    *       ),
     * )
     */
     public function logout()
     {
         if (auth()->user()) {
-            $revoke = auth()->user()->currentAccessToken()->delete();
+            // FIXME : Fixing Revoke the token that was used to authenticate the current request
+            // $revoke = auth()->user()->currentAccessToken()->delete();
+
             /**Use below code if you want to log current user out in all devices */
-            // $revoke = auth()->user()->tokens()->delete();
+            $revoke = auth()->user()->tokens()->delete();
             if ($revoke) {
                 return $this->responseJson('success', 'Logout');
-            } else {
-                return $this->responseJson('error', 'Logout');
             }
-        } else {
-            return $this->responseJson('error', 'User not found.', '', 404);
+            return $this->responseJson('error', 'Logout');
         }
+        return $this->responseJson('error', 'Unauthorized.', '', 401);
     }
 }
