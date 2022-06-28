@@ -38,6 +38,6 @@ Route::name('api.v1.')
         Route::resource('vehicles', 'VehicleController')->only('index', 'show');
 
         // Orders
-        Route::resource('orders', 'OrderController')->only('index', 'show');
+        Route::resource('orders', 'OrderController')->only('index', 'store', 'show');
     });
 });

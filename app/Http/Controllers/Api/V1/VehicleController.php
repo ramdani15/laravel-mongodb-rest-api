@@ -104,7 +104,7 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::find($id);
         if (!$vehicle) {
-            return $this->responseJson('error', 'Not found.', '', 404);   
+            return $this->responseJson('error', 'Not found.', '', 404);
         }
         return $this->responseJson('success', 'Get detail vehicle successfully', new VehicleDetailResource($vehicle));
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Cores\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\OrderStoreRequest;
 use App\Http\Resources\Api\V1\OrderDetailResource;
 use App\Models\Order;
 use Facades\App\Http\Repositories\Api\V1\OrderRepository;
@@ -62,6 +63,46 @@ class OrderController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *  path="/api/v1/orders",
+     *  summary="Create order",
+     *  description="Endpoint to handle create order",
+     *  tags={"Orders"},
+     *  security={
+     *      {"token": {}}
+     *  },
+     *  @OA\RequestBody(
+     *      required=true,
+     *      @OA\JsonContent(
+     *          required={"quantity"},
+     *          @OA\Property(property="quantity", type="numeric", example=1),
+     *          @OA\Property(property="orderable_id", type="string", example="62bacc8b009f5302930e15ab"),
+     *      ),
+     *  ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="OK",
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Bad Request",
+     *  ),
+     * )
+     */
+    public function store(OrderStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data['orderable_type'] = 'Vehicle';
+        $response = OrderRepository::createOrder($data);
+        return $this->responseJson(
+            $response['status'] ? 'success' : 'error',
+            $response['message'],
+            $response['status'] ? $response['data'] : null,
+            $response['status'] ? 201 : 400,
+        );
+    }
+
+    /**
      * @OA\Get(
      *       path="/api/v1/orders/{id}",
      *       summary="Get detail order",
@@ -92,7 +133,7 @@ class OrderController extends Controller
             'user_id' => auth()->id()
         ]);
         if (!$order) {
-            return $this->responseJson('error', 'Not found.', '', 404);   
+            return $this->responseJson('error', 'Not found.', '', 404);
         }
         return $this->responseJson('success', 'Get detail order successfully', new OrderDetailResource($order));
     }

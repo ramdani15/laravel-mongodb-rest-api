@@ -34,7 +34,7 @@ class Order extends Model
     }
 
     /**
-     * Get the User
+     * Relation to User
      */
     public function user()
     {
