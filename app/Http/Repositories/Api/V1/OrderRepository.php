@@ -23,7 +23,7 @@ class OrderRepository
     public function searchOrders($request)
     {
         $limit = $request->limit ?? 10;
-        $data = $this->order;
+        $data = $this->order->whereUserId(auth()->id());
         $filters = [
             [
                 'field' => 'name',

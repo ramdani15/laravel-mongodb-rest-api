@@ -21,7 +21,7 @@ class OrderFactory extends Factory
             'total_price' => $this->faker->randomDigit() * 1000,
             'orderable_id' => $orderable['class']::factory(),
             'orderable_type' => $orderable['classname'],
-            'user_id' => User::factory()
+            'user_id' => User::factory(['password' => bcrypt('password123')])
         ];
     }
 

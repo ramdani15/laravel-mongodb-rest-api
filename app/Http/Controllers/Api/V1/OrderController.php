@@ -87,7 +87,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = Order::firstWhere([
+            '_id' => $id,
+            'user_id' => auth()->id()
+        ]);
         if (!$order) {
             return $this->responseJson('error', 'Not found.', '', 404);   
         }
