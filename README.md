@@ -16,5 +16,5 @@ Before setup the project, you need to install this :
 
 ## URL 
 - Web : `http://localhost:8080`
-- DB / MongoDB : `http://localhost:3037`
+- DB / MongoDB : `http://localhost:27018`
 - API Document : `http://localhost:8080/api/v1/documentation`
