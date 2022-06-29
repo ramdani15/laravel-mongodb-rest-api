@@ -2,32 +2,34 @@
 version: '3'
 services:
     nginx:
-        container_name: nginx
+        container_name: nginx-laravel-mongodb
         image: nginx:1.17.8
         command: [ "nginx", "-g", "daemon off;" ]
-        working_dir: /var/www/html
         depends_on:
-            - php
+            - app
+        links:
+            - app
+        working_dir: /var/www/html
         volumes:
             - ./docker/nginx/asset/:/etc/nginx/conf.d/
             - ./docker/nginx/log:/var/log/nginx/:rw
             - ./:/var/www/html:rw
         ports:
             - "8080:80"
-        links:
-            - php
         logging:
             options:
                 max-size: "1m"
                 max-file: "3"
-    php:
-        container_name: php
+        networks:
+            - local-network
+    app:
+        container_name: app-laravel-mongodb
         build: ./docker/php
+        working_dir: /var/www/html
         links:
             - db
         depends_on:
             - db
-        working_dir: /var/www/html
         volumes:
             - ./:/var/www/html:rw
         command: bash -c "php-fpm"
@@ -35,8 +37,10 @@ services:
             options:
                 max-size: "1m"
                 max-file: "3"
+        networks:
+            - local-network
     db:
-        container_name: mongodb
+        container_name: db-laravel-mongodb
         image: mongo:4.2
         volumes:
             - './dbdata:/data/db'
@@ -47,3 +51,8 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: password123
         logging:
             driver: none
+        networks:
+            - local-network
+
+networks:
+    local-network:

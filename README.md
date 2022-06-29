@@ -6,13 +6,13 @@ Before setup the project, you need to install this :
 
 ## Installation Guide
 - Run `docker-compose up -d --build`
-- Run `docker-compose exec php composer install`
-- Run `docker-compose exec php npm install`
+- Run `docker-compose exec app composer install`
+- Run `docker-compose exec app npm install`
 - Copy `env.example` to `.env`
 - Copy `env.example` to `.env.testing` for unit testing
-- Run `docker-compose exec php php artisan migrate:refresh --seed`
-- Run `docker-compose exec php php artisan key:generate`
-- For unit testing Run `docker-compose exec php php artisan test`
+- Run `docker-compose exec app php artisan migrate:refresh --seed`
+- Run `docker-compose exec app php artisan key:generate`
+- For unit testing Run `docker-compose exec app php artisan test`
 
 ## URL 
 - Web : `http://localhost:8080`
